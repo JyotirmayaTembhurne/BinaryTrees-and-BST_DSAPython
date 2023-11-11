@@ -1,0 +1,39 @@
+class Node:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+
+root = Node(8)
+root.left = Node(5)
+root.right = Node(10)
+root.left.left = Node(1)
+root.left.right = Node(7)
+root.right.right = Node(12)
+key = 6
+
+
+def SandP(root, key):
+    if not root:
+        return None
+    inord = list()
+
+    def Traverse(node):
+        if node:
+            Traverse(node.left)
+            inord.append(node.val)
+            Traverse(node.right)
+
+    Traverse(root)
+    keyind = 0
+    while keyind < len(inord) and key > inord[keyind]:
+        keyind += 1
+    if keyind > 0:
+        ans = [inord[keyind - 1], inord[keyind]]
+    else:
+        ans = [keyind, keyind + 1]
+    return ans
+
+
+print(SandP(root, key))
